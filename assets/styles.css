@@ -1056,3 +1056,72 @@ body.page-about .nav [data-nav="about"]::after {
   .detail-title { font-size: clamp(2rem, 10vw, 2.6rem); }
   .sec-num { width: 34px; height: 34px; font-size: .86rem; }
 }
+
+/* —— GitHub 项目卡片 —— */
+.repo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.repo {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: clamp(20px, 2.6vw, 30px);
+  background: var(--paper);
+  transition: background .35s;
+}
+.repo:hover { background: var(--paper-2); }
+.repo-idx {
+  font-size: .6rem;
+  letter-spacing: .22em;
+  color: var(--stone-2);
+  margin: 0;
+}
+.repo-name {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  margin: 0;
+}
+.repo-en {
+  font-size: .62rem;
+  letter-spacing: .2em;
+  color: var(--stone-2);
+  margin: 0;
+}
+.repo-desc {
+  font-size: .86rem;
+  line-height: 1.9;
+  color: var(--stone);
+  margin: 4px 0 0;
+  max-width: 30em;
+}
+.repo-stack {
+  font-size: .68rem;
+  letter-spacing: .1em;
+  color: var(--celadon);
+  margin: 0;
+}
+.repo-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin-top: auto;
+  padding-top: 12px;
+  font-size: .74rem;
+  letter-spacing: .08em;
+}
+.repo-links a {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color .25s, border-color .25s;
+}
+.repo-links a:hover { color: var(--seal); border-color: var(--seal); }
+
+@media (max-width: 860px) {
+  .repo-grid { grid-template-columns: 1fr; }
+}
