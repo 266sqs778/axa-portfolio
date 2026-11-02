@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git 项目索引 · AXA</title>
+<meta name="description" content="AXA 的开源项目索引：AI 钓鱼参谋、饮食复盘、关系图谱与作品集源码，均含在线演示与仓库地址。">
+<meta name="theme-color" content="#0b0d0e">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0d0e'/%3E%3Crect x='6' y='6' width='20' height='20' fill='none' stroke='%23c7ff2e' stroke-width='2'/%3E%3C/svg%3E">
+<style>
+  @font-face {
+    font-family: 'Work Sans';
+    src: url('assets/fonts/WorkSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Work Sans';
+    src: url('assets/fonts/WorkSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-display: swap;
+  }
+
+  :root {
+    --bg: #0b0d0e;
+    --panel: #121617;
+    --panel-2: #171c1e;
+    --line: rgba(255, 255, 255, .085);
+    --txt: #e8eaeb;
+    --mut: #838a92;
+    --acc: #c7ff2e;
+    --sans: 'Work Sans', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--txt);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, .028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, .028) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(circle at 50% 0%, #000 0%, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle at 50% 0%, #000 0%, transparent 78%);
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    position: relative;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 48px);
+  }
+
+  /* —— 顶栏 —— */
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 0 18px;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--mut);
+  }
+  .top a { transition: color .25s; }
+  .top a:hover { color: var(--acc); }
+  .top .back::before { content: '← '; }
+
+  /* —— 首屏 —— */
+  .hero {
+    padding: clamp(48px, 9vw, 104px) 0 clamp(40px, 6vw, 64px);
+  }
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 26px;
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .22em;
+    color: var(--acc);
+  }
+  .eyebrow::before {
+    content: '';
+    width: 22px;
+    height: 1px;
+    background: var(--acc);
+  }
+  .hero h1 {
+    margin: 0;
+    font-size: clamp(2.4rem, 6.4vw, 4.2rem);
+    font-weight: 700;
+    letter-spacing: .02em;
+    line-height: 1.12;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--acc);
+  }
+  .hero .sub {
+    max-width: 34em;
+    margin: 22px 0 0;
+    color: var(--mut);
+    font-size: .95rem;
+  }
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 34px;
+    margin: 44px 0 0;
+    padding: 20px 0 0;
+    border-top: 1px solid var(--line);
+    list-style: none;
+  }
+  .facts b {
+    display: block;
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    color: var(--txt);
+  }
+  .facts span {
+    font-size: .68rem;
+    letter-spacing: .16em;
+    color: var(--mut);
+  }
+
+  /* —— 项目列表 —— */
+  .section-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 18px;
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .2em;
+    color: var(--mut);
+    text-transform: uppercase;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: clamp(22px, 2.8vw, 34px);
+    background: var(--panel);
+    transition: background .3s;
+  }
+  .card:hover { background: var(--panel-2); }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: .62rem;
+    letter-spacing: .22em;
+  }
+  .num { color: var(--mut); }
+  .lang {
+    padding: 2px 9px;
+    border: 1px solid var(--line);
+    color: var(--acc);
+    letter-spacing: .14em;
+  }
+  .card h2 {
+    margin: 6px 0 0;
+    font-size: 1.22rem;
+    font-weight: 700;
+    letter-spacing: .01em;
+    line-height: 1.4;
+  }
+  .card .en {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: .62rem;
+    letter-spacing: .2em;
+    color: var(--mut);
+  }
+  .card .desc {
+    margin: 6px 0 0;
+    font-size: .87rem;
+    line-height: 1.9;
+    color: #a9b0b7;
+    max-width: 32em;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 18px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 15px;
+    border: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .12em;
+    color: var(--txt);
+    transition: border-color .25s, background .25s, color .25s;
+  }
+  .btn::after { content: '→'; transition: transform .25s; }
+  .btn:hover { border-color: var(--acc); color: var(--acc); }
+  .btn:hover::after { transform: translateX(3px); }
+  .btn.primary {
+    border-color: transparent;
+    background: var(--acc);
+    color: #0b0d0e;
+    font-weight: 700;
+  }
+  .btn.primary:hover { background: #d8ff5c; color: #0b0d0e; }
+
+  /* —— 页脚 —— */
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: clamp(40px, 6vw, 72px);
+    padding: 26px 0 46px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .12em;
+    color: var(--mut);
+  }
+  .foot a { color: var(--txt); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+  .foot a:hover { color: var(--acc); border-color: var(--acc); }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .facts { gap: 22px; }
+    .top { font-size: .62rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a class="back" href="index.html">返回作品集</a>
+      <span>AXA · GIT INDEX / 2026</span>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">OPEN SOURCE · GITHUB PAGES</p>
+        <h1>Git 项目<em>索引</em></h1>
+        <p class="sub">四组可运行的实践。全部无后端、无密钥，点开即用；代码与演示分别有独立入口。</p>
+        <ul class="facts">
+          <li><b>04</b><span>公开仓库</span></li>
+          <li><b>02</b><span>技术方向</span></li>
+          <li><b>00</b><span>外部依赖</span></li>
+        </ul>
+      </section>
+
+      <p class="section-label"><span>Repositories</span><span>2026.11</span></p>
+      <section class="grid">
+        <article class="card">
+          <div class="card-top"><span class="num">01</span><span class="lang">PYTHON</span></div>
+          <h2>千鱼千寻 · AI 钓鱼参谋</h2>
+          <p class="en">ANGLING AI</p>
+          <p class="desc">可解释的智能垂钓决策助手：鱼情指数、钓点地图、钓获记录三段式工作流，给建议的同时说明依据。</p>
+          <div class="links">
+            <a class="btn primary" href="https://266sqs778.github.io/angling-ai/" target="_blank" rel="noopener">打开演示</a>
+            <a class="btn" href="https://github.com/266sqs778/angling-ai" target="_blank" rel="noopener">源码</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top"><span class="num">02</span><span class="lang">JAVASCRIPT</span></div>
+          <h2>饮食复盘助手</h2>
+          <p class="en">NUTRITION AGENT</p>
+          <p class="desc">本地优先的饮食记录与周复盘：一句话记餐、规则化估算与提醒，零依赖，原生 ES Modules。</p>
+          <div class="links">
+            <a class="btn primary" href="https://266sqs778.github.io/nutrition-agent/" target="_blank" rel="noopener">打开演示</a>
+            <a class="btn" href="https://github.com/266sqs778/nutrition-agent" target="_blank" rel="noopener">源码</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top"><span class="num">03</span><span class="lang">JAVASCRIPT</span></div>
+          <h2>关系图谱实验</h2>
+          <p class="en">FRIEND ATLAS</p>
+          <p class="desc">本地优先的社交数据可视化：中国地图下钻、关系网络与统计分析，无构建步骤。</p>
+          <div class="links">
+            <a class="btn primary" href="https://266sqs778.github.io/friend-atlas/" target="_blank" rel="noopener">打开演示</a>
+            <a class="btn" href="https://github.com/266sqs778/friend-atlas" target="_blank" rel="noopener">源码</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top"><span class="num">04</span><span class="lang">HTML / CSS</span></div>
+          <h2>本站源码</h2>
+          <p class="en">AXA PORTFOLIO</p>
+          <p class="desc">这套作品集本身：静态多页站点，内容与构建脚本同仓，二维码、字体等资源全部本地化。</p>
+          <div class="links">
+            <a class="btn primary" href="index.html">浏览作品集</a>
+            <a class="btn" href="https://github.com/266sqs778/axa-portfolio" target="_blank" rel="noopener">源码</a>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span>全部项目运行于 GitHub Pages · 无后端 / 无密钥</span>
+      <a href="https://github.com/266sqs778" target="_blank" rel="noopener">github.com/266sqs778</a>
+    </footer>
+  </div>
+</body>
+</html>
