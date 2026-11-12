@@ -248,10 +248,7 @@
   /* —— 素材存档 —— */
   .archive {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    grid-template-areas:
-      "a c"
-      "b c";
+    grid-template-columns: repeat(3, 1fr);
     gap: 1px;
     background: var(--line);
     border: 1px solid var(--line);
@@ -262,18 +259,13 @@
     margin: 0;
     background: var(--panel);
   }
-  .archive figure:nth-child(1) { grid-area: a; }
-  .archive figure:nth-child(2) { grid-area: b; }
-  .archive figure:nth-child(3) { grid-area: c; }
   .shot {
     display: flex;
     align-items: center;
     justify-content: center;
     background: #eef1f2;
+    aspect-ratio: 16 / 9;
   }
-  .archive figure:nth-child(1) .shot,
-  .archive figure:nth-child(2) .shot { aspect-ratio: 16 / 9; }
-  .archive figure:nth-child(3) .shot { flex: 1; }
   .shot img {
     display: block;
     width: 100%;
@@ -290,6 +282,19 @@
     color: var(--mut);
   }
   .archive figcaption span { color: var(--acc); }
+
+  @media (max-width: 900px) {
+    .archive {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .archive figure:nth-child(6) { grid-column: span 2; }
+  }
+  @media (max-width: 560px) {
+    .archive {
+      grid-template-columns: 1fr;
+    }
+    .archive figure:nth-child(6) { grid-column: span 1; }
+  }
 
   /* —— 页脚 —— */
   .foot {
@@ -311,11 +316,6 @@
 
   @media (max-width: 900px) {
     .grid { grid-template-columns: 1fr; }
-    .archive {
-      grid-template-columns: 1fr;
-      grid-template-areas: "a" "b" "c";
-    }
-    .archive figure:nth-child(3) .shot { aspect-ratio: 3 / 4; flex: none; }
   }
   @media (max-width: 520px) {
     .facts { gap: 22px; }
@@ -390,19 +390,31 @@
         </article>
       </section>
 
-      <p class="section-label" id="archive" style="margin-top:clamp(40px,6vw,64px)"><span>Archive · 千鱼千寻</span><span>品牌素材 / 2026</span></p>
+      <p class="section-label" id="archive" style="margin-top:clamp(40px,6vw,64px)"><span>Archive · 千鱼千寻</span><span>品牌素材 & UI 截图 / 2026</span></p>
       <section class="archive">
         <figure>
+          <div class="shot"><img src="assets/angling/ui-banner.jpg" alt="千鱼千寻在线演示顶部横幅：第一次出钓按这六步走" loading="lazy"></div>
+          <figcaption><span>01</span>在线演示 · 顶部横幅</figcaption>
+        </figure>
+        <figure>
+          <div class="shot"><img src="assets/angling/ui-step4-drift.jpg" alt="调漂四步界面：重铅找底→半水调四→挂饵钓二→微调" loading="lazy"></div>
+          <figcaption><span>02</span>产品 UI · 调漂四步</figcaption>
+        </figure>
+        <figure>
+          <div class="shot"><img src="assets/angling/ui-step6-review.jpg" alt="复盘界面：现象/原因/改进表格与复盘闭环" loading="lazy"></div>
+          <figcaption><span>03</span>产品 UI · 复盘闭环</figcaption>
+        </figure>
+        <figure>
           <div class="shot"><img src="assets/angling/slogan-navigation.jpg" alt="千鱼千寻品牌主张：像导航一样全程指导你的钓鱼体验，蓝色手写书法字" loading="lazy"></div>
-          <figcaption><span>01</span>品牌主张 · 手写体文案</figcaption>
+          <figcaption><span>04</span>品牌主张 · 手写体文案</figcaption>
         </figure>
         <figure>
           <div class="shot"><img src="assets/angling/slogan-first-cast.jpg" alt="千鱼千寻品牌标语：最好的钓位永远留给第一个抛竿的人" loading="lazy"></div>
-          <figcaption><span>02</span>品牌标语 · 传播文案</figcaption>
+          <figcaption><span>05</span>品牌标语 · 传播文案</figcaption>
         </figure>
         <figure>
           <div class="shot"><img src="assets/angling/wordmark.jpg" alt="千鱼千寻主视觉字标：竖排书法字搭配鱼钩与蓝色水波纹" loading="lazy"></div>
-          <figcaption><span>03</span>主视觉字标 · 千鱼千寻</figcaption>
+          <figcaption><span>06</span>主视觉字标 · 千鱼千寻</figcaption>
         </figure>
       </section>
     </main>
